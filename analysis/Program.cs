@@ -9,6 +9,29 @@ using static AngouriMath.Extensions.AngouriMathExtensions;
 using System.Collections.Generic;
 using System;
 using AngouriMath;
+using Exts;
+
+namespace Exts
+{
+
+    public static class Ext
+    {
+
+        public static Entity VeryExpensiveSimplify(this Entity expr, int level)
+        {
+            Entity ExpensiveSimplify(Entity expr)
+            {
+                return expr.Replace(x => x.Simplify());
+            }
+
+            if (level <= 0)
+                return expr;
+            return VeryExpensiveSimplify(ExpensiveSimplify(expr), level - 1);
+        }
+
+    }
+
+}
 
 namespace analysis
 {
@@ -45,22 +68,22 @@ namespace analysis
 
                 Func<Entity, Entity> mySimplify = (e) =>
                 {
-                    return e
-                        .Substitute("sin(d/d*2*pi)", "0")
-                        .Substitute("-0/((1/d)*2*pi)", "0")                        
-                        .Simplify()
-                        .ToString()
-                        .Replace("-1/4 * s / pi ^ 2 + 1/4 * s / pi ^ 2", "0");
+                    var q1 = e.Simplify().ToString();
+                    var q2 = e.VeryExpensiveSimplify(2).ToString();
+
+                    if (q2.Length < q1.Length)
+                        return q2;
+                    else
+                        return q1;
                 };
 
                 Func<AngouriMath.Entity, string> toLatex = (e) =>
                 {
-                    var res = mySimplify(e.Simplify())
-                        .Simplify()
-                        .Latexise().Replace("\\times", "\\cdot");
+                    var res = mySimplify(e).Latexise().Replace("\\times", "\\cdot");
 
                     return res;
                 };
+                
                 var eqMargin = new Thickness(0, 0, 100, 15);
                 var eqFontSize = 20f;
 
