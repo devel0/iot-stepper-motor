@@ -1,0 +1,36 @@
+{
+    "name": "iot-scurve-stepper-motor",
+    "version": "0.1.0",
+    "description": "Library to drive stepper motor using scurve speed profile for ststm32 platform, mbed os framework.",
+    "keywords": "stepper-motor,scurve,mbed,ststm32",
+    "authors": {
+        "name": "Lorenzo Delana",
+        "email": "lorenzo.delana@gmail.com"
+    },
+    "license": "MIT",
+    "frameworks": [
+        "ststm32"
+    ],
+    "platforms": [
+        "mbed"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/devel0/iot-scurve-stepper-motor.git"
+    },
+    "examples": [
+        {
+            "name": "example01",
+            "base": "examples/example01",
+            "files": [                
+                "example01.cpp"
+            ]
+        }
+    ],
+    "export": {
+        "exclude":
+        [
+            "src/debug-main.cpp"            
+        ]
+    }
+}

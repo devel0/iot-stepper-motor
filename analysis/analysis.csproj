@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- <PackageReference Include="AngouriMath" Version="1.2.0-preview.5" />     -->
+    <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />    
+    <!-- <PackageReference Include="CSharpMath.Avalonia" Version="$(CSharpMathVersion)" /> -->
+    <!-- <PackageReference Include="netcore-sci" Version="1.19.0" /> -->
+    <!-- <PackageReference Include="OxyPlot.Avalonia" Version="$(OxyPlotVersion)" /> -->
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\netcore-sci\netcore-sci\netcore-sci.csproj" />
+    <ProjectReference Include="..\..\oxyplot-avalonia\Source\OxyPlot.Avalonia\OxyPlot.Avalonia.csproj" />
+    <ProjectReference Include="..\..\CSharpMath\CSharpMath.Avalonia\CSharpMath.Avalonia.csproj" />
+    <ProjectReference Include="..\..\AngouriMath\Sources\AngouriMath\AngouriMath.csproj" />    
+  </ItemGroup>
+
+</Project>
