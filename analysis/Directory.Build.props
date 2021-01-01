@@ -6,7 +6,5 @@
         <CSharpMathVersion>0.5.0-beta</CSharpMathVersion>
         <NetcoreSciVersion>1.19.0</NetcoreSciVersion>
         <AngouriMathVersion>1.2.0-preview.5</AngouriMathVersion>
-
-        <!-- <AvaloniaVersion>0.10.0-rc1</AvaloniaVersion> -->
     </PropertyGroup>
 </Project>

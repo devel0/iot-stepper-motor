@@ -21,9 +21,11 @@ int main()
 
     auto wait_time = 2150ms;
     auto motion_time = 5000ms;
+    auto speed_var_time = 1000ms;
     auto pulse_rev = 400;
-    auto pulse_width = 5us;
-    auto rev_cnt = 1.5;
+    auto pulse_width = 5us;    
+    auto speed_high_rps = 6.0;
+    auto speed_low_rps = 1.5;
 
     //---
 
@@ -37,10 +39,7 @@ int main()
 
     auto motion_issued = false;
     auto stop_issued = false;
-
-    printf("%s\n", tostr(std::chrono::duration<double>(wait_time.count()).count()).c_str());
-    return 0;
-
+    
     while (true)
     {
         auto t_now = timer.elapsed_time();
@@ -51,12 +50,12 @@ int main()
         {
             motion_issued = true;
             t_start = t_now;
-            m.setSpeed(1, 1);
+            m.setSpeed(speed_high_rps, chrono_s(speed_var_time));
         }
         if (!stop_issued && t_now - t_start > motion_time)
         {
             stop_issued = true;
-            m.setSpeed(0, chrono_s(wait_time));
+            m.setSpeed(speed_low_rps, chrono_s(speed_var_time));
         }
         if (t_now - t_start > motion_time + wait_time)
         {

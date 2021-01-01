@@ -7,7 +7,8 @@ enum SCurveStepperMotorState
 {
     unknown,
     idle,
-    moving,
+    speed_changing,
+    cruise,
     failed
 };
 
@@ -19,21 +20,54 @@ class SCurveStepper
     int pulse_rev;
     std::chrono::microseconds pulse_width_min;
 
-    SCurveStepperMotorState _state;
-    double current_speed_ps;
+    SCurveStepperMotorState _state;    
+    Timeout pulse_down;        
+
+    // current position (step)
     double current_pos_step;
-    double s0_speed_ps;
-    double d_us;
+    // actual speed (pulse/us)
+    double current_speed_pus;
+
+    // actual pulse period (us)
+    double current_period_us;
+    // actual pulse period start timestamp (chrono)
+    std::chrono::microseconds current_period_start;
+
+    // motion: start timestamp (us)
     double t0_us;
+    // motion: start pos
+    double p0_step;    
+    // motion: start speed (pulse/us)
+    double s0_speed_pus;
+    // motion: start timestamp (chrono)
+    std::chrono::microseconds motion_start;
+    // motion: end timestamp (chrono)
+    std::chrono::microseconds motion_end;
+
+    // motion: speed variation (pulse/us)
+    double s_speed_pus;    
+    // motion: duration (us)
+    double d_us;
+    // motion: step expected till now
     int pulse_expected;
-    int pulse_executed;
-    int pulse_total;
+    // motion: total step expected at end of motion variation
+    int pulse_expected_max;
+    // motion: step executed till now
+    int pulse_executed;    
+    // motion: step excees till lnow
+    int pulse_excees;
 
-    /// 2 * pi
-    double _2PI;
+    // motion count
+    int motion_count;    
+    // min period registered during motion controls
+    double period_min_us;    
 
-    /// pi^2
-    double _PI2;
+    // 2 * pi
+    static const double _2PI;
+    // pi^2
+    static const double _PI2;
+
+    void pulseDownFn();
 
 public:
     SCurveStepper(int __tag, Timer &_timer, DigitalOut &_pulsePin, int _pulse_rev,
@@ -41,9 +75,15 @@ public:
 
     int tag() const { return _tag; }
     SCurveStepperMotorState state() const { return _state; }
+    std::chrono::microseconds motionStart() const { return motion_start; }
+    std::chrono::microseconds motionEnd() const { return motion_end; }
     int pulseRev() const { return pulse_rev; }
     /// current speed ( rev/sec )
-    double currentSpeed() const { return current_speed_ps / pulse_rev; }
+    double currentSpeed() const { return current_speed_pus * 1e-6 / pulse_rev; }
+    /// pulse executed last motion
+    int pulseExecuted() const { return pulse_executed; }
+    /// pulse expected last motion
+    int pulseExpected() const { return pulse_expected; }
 
     /// change from current to given speed ( rev/sec ) in given duration time ( sec )
     void setSpeed(double revSec, double durationSec);
@@ -51,6 +91,7 @@ public:
     void control();
 
     void debugStats(bool block_on_error = true);
+    
     /// compute accel from given speed s, duration d and time t
     double computeAccel(double s, double d, double t);
     /// compute duration from given speed s and acceleration a
