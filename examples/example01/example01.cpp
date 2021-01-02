@@ -4,6 +4,12 @@
 
 #ifdef EXAMPLE01
 
+// Example01
+// - go to high speed 6rev/s in 0.25s
+// - cruise speed for more 0.75s
+// - go to low speed 0.1rev/s in 0.25s
+// - cruise speed for more 0.25s
+
 #include <mbed.h>
 
 #include <number-utils.h>
