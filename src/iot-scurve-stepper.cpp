@@ -20,6 +20,7 @@ SCurveStepper::SCurveStepper(int __tag,
 
     current_speed_pus = 0;
     current_pos_step = 0;
+    debug_prev_pos_step = 0;
     p0_step = 0;
     pulse_pin = 0;
     pulse_excees = 0;
@@ -151,13 +152,17 @@ void SCurveStepper::control()
 
 void SCurveStepper::debugStats(bool block_on_error)
 {
-    printf("m[%d] pulse(exe/exp/max): %d/%d/%d   period_min: %s ms   fMax: %s kHz\n",
+    printf("m[%d] pulse(exe/exp/max): %d/%d/%d   period_min: %s ms   fMax: %s kHz   pos: %s step (∆:%s)\n",
            _tag,
            pulse_executed,
            pulse_expected,
            pulse_expected_max,
            tostr(period_min_us, 3, false).c_str(),
-           tostr(1.0 / (period_min_us * 1e-3), 3, false).c_str());
+           tostr(1.0 / (period_min_us * 1e-3), 3, false).c_str(),
+           tostr(current_pos_step, -3, false).c_str(),
+           tostr(current_pos_step - debug_prev_pos_step, -3, false).c_str());
+
+    debug_prev_pos_step = current_pos_step;
 
     if (block_on_error && pulse_executed != pulse_expected)
     {

@@ -25,6 +25,8 @@ class SCurveStepper
 
     // current position (step)
     double current_pos_step;
+    // previous position (step)
+    double debug_prev_pos_step;
     // actual speed (pulse/us)
     double current_speed_pus;
 
