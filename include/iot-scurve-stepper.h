@@ -39,10 +39,8 @@ class SCurveStepper
     double p0_step;    
     // motion: start speed (pulse/us)
     double s0_speed_pus;
-    // motion: start timestamp (chrono)
-    std::chrono::microseconds motion_start;
-    // motion: end timestamp (chrono)
-    std::chrono::microseconds motion_end;
+    // motion: start setSpeed timestamp (chrono)
+    std::chrono::microseconds motion_start;    
 
     // motion: speed variation (pulse/us)
     double s_speed_pus;    
@@ -75,8 +73,7 @@ public:
 
     int tag() const { return _tag; }
     SCurveStepperMotorState state() const { return _state; }
-    std::chrono::microseconds motionStart() const { return motion_start; }
-    std::chrono::microseconds motionEnd() const { return motion_end; }
+    std::chrono::microseconds motionStart() const { return motion_start; }    
     int pulseRev() const { return pulse_rev; }
     /// current speed ( rev/sec )
     double currentSpeed() const { return current_speed_pus * 1e-6 / pulse_rev; }

@@ -4,17 +4,17 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <!-- <PackageReference Include="AngouriMath" Version="$(AngouriMathVersion)"/>
+    <PackageReference Include="AngouriMath" Version="$(AngouriMathVersion)"/>
     <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)"/>
-    <PackageReference Include="CSharpMath.Avalonia" Version="$(CSharpMathVersion)"/>
-    <PackageReference Include="netcore-sci" Version="$(netcoreSciVersion)"/>
-    <PackageReference Include="OxyPlot.Avalonia" Version="$(OxyPlotVersion)"/> -->
+    <!-- <PackageReference Include="CSharpMath.Avalonia" Version="$(CSharpMathVersion)"/> -->
+    <PackageReference Include="netcore-sci" Version="$(NetcoreSciVersion)"/>
+    <PackageReference Include="OxyPlot.Avalonia" Version="$(OxyPlotVersion)"/>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia.Desktop" Version="0.10.0-rc1"/>
-    <ProjectReference Include="..\..\netcore-sci\netcore-sci\netcore-sci.csproj"/>
-    <ProjectReference Include="..\..\oxyplot-avalonia\Source\OxyPlot.Avalonia\OxyPlot.Avalonia.csproj"/>
-    <ProjectReference Include="..\..\CSharpMath\CSharpMath.Avalonia\CSharpMath.Avalonia.csproj"/>
-    <ProjectReference Include="..\..\AngouriMath\Sources\AngouriMath\AngouriMath.csproj"/>
+    <!-- <PackageReference Include="Avalonia.Desktop" Version="0.10.0-rc1"/> -->
+    <!-- <ProjectReference Include="..\..\netcore-sci\netcore-sci\netcore-sci.csproj"/> -->
+    <!--<ProjectReference Include="..\..\oxyplot-avalonia\Source\OxyPlot.Avalonia\OxyPlot.Avalonia.csproj"/> -->
+    <ProjectReference Include="..\thirdy\CSharpMath\CSharpMath.Avalonia\CSharpMath.Avalonia.csproj"/>
+    <!-- <ProjectReference Include="..\..\AngouriMath\Sources\AngouriMath\AngouriMath.csproj"/> -->
   </ItemGroup>
 </Project>

@@ -2,6 +2,7 @@
 
 #include <constant-utils.h>
 #include <timer-utils.h>
+#include <string-utils.h>
 
 const double SCurveStepper::_2PI = 2 * PI;
 const double SCurveStepper::_PI2 = PI * PI;
@@ -24,8 +25,6 @@ SCurveStepper::SCurveStepper(int __tag,
     pulse_excees = 0;
     period_min_us = 0;
 }
-int k = 0;
-int f = 0;
 
 void SCurveStepper::setSpeed(double speed_rev_sec, double durationSec)
 {
@@ -45,13 +44,6 @@ void SCurveStepper::setSpeed(double speed_rev_sec, double durationSec)
     _state = SCurveStepperMotorState::speed_changing;
     motion_start = cur_t;
     current_period_start = cur_t;
-
-    k = 0;
-    if (f==1)
-    {
-        f=f;
-    }
-    ++f;
 }
 
 void SCurveStepper::pulseDownFn()
@@ -71,11 +63,6 @@ void SCurveStepper::control()
 
     if (t_us >= d_us && pulse_executed >= pulse_expected_max)
         _state = SCurveStepperMotorState::cruise;
-
-    if (f==3)
-    {
-        f=f;
-    }
 
     switch (_state)
     {
@@ -110,18 +97,9 @@ void SCurveStepper::control()
 
     case SCurveStepperMotorState::speed_changing:
     {
-        if (f==2)
-        {
-            f=f;
-        }
         current_speed_pus = computeSpeed(s0_speed_pus, s_speed_pus, d_us, t_us);
 
         pulse_expected = round(computePos(s0_speed_pus, p0_step, s_speed_pus, d_us, t_us)) - p0_step;
-
-        if (t_us > d_us / 2 && f==2)
-        {
-            k = k;
-        }
 
         if (current_speed_pus != 0)
         {
@@ -129,31 +107,19 @@ void SCurveStepper::control()
 
             if (pulse_pin != 1)
             {
-                k++;
-
                 bool time_exceeded = t_us > d_us;
                 auto now_period_us = chrono_us(cur_t - current_period_start);
                 // adjust
                 double rp = current_period_us;
                 if (pulse_executed < pulse_expected)
                     rp /= 2;
-                if (t_us >= d_us)
-                {
-                    k = k;
-                }
                 if (now_period_us >= rp)
                 {
-                    if (s_speed_pus == 0 && t_us > d_us / 2)
-                    {
-                        k = k;
-                    }
-
                     if (time_exceeded)
                         ++pulse_excees;
 
                     if (pulse_excees > 1)
                     {
-                        motion_end = cur_t;
                         _state = SCurveStepperMotorState::failed;
                         ++motion_count;
                         return;
@@ -185,24 +151,20 @@ void SCurveStepper::control()
 
 void SCurveStepper::debugStats(bool block_on_error)
 {
-    printf("debug stats\n");
-    // auto effective_motion_duration = motion_end - motion_start;
+    printf("m[%d] pulse(exe/exp/max): %d/%d/%d   period_min: %s ms   fMax: %s kHz\n",
+           _tag,
+           pulse_executed,
+           pulse_expected,
+           pulse_expected_max,
+           tostr(period_min_us, 3, false).c_str(),
+           tostr(1.0 / (period_min_us * 1e-3), 3, false).c_str());
 
-    // uint64_t mdur_ms = chrono_ms(effective_motion_duration);
-
-    // printf("m[%d] pulse_executed: %d   pulse_expected: %d   motion_dur: %llums   period_min: %lluus\n",
-    //        _tag,
-    //        pulse_executed,
-    //        pulse_expected,
-    //        mdur_ms,
-    //        period_min_us);
-
-    // if (block_on_error && pulse_executed != pulse_expected)
-    // {
-    //     printf("ERROR\n");
-    //     while (1)
-    //         ;
-    // }
+    if (block_on_error && pulse_executed != pulse_expected)
+    {
+        printf("ERROR\n");
+        while (1)
+            ;
+    }
 }
 
 double SCurveStepper::computeAccel(double s, double d, double t)
