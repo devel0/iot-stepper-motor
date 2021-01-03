@@ -97,6 +97,11 @@ namespace analysis
                 var cbPosToggle = new CheckBox() { Content = "pos", Margin = new Thickness(10, 0, 0, 0) };
                 spSide.Children.Add(cbPosToggle);
 
+                var cbFormulaToggle = new CheckBox() { Content = "formulas", Margin = new Thickness(10, 0, 0, 0) };
+                spSide.Children.Add(cbFormulaToggle);
+                cbFormulaToggle.Bind(CheckBox.IsCheckedProperty, new Binding("IsVisible", BindingMode.TwoWay)
+                { Source = sp });
+                
                 var grRoot = new Grid() { Margin = new Thickness(10) };
                 grRoot.Children.Add(gr);
                 this.Content = grRoot;
@@ -119,24 +124,44 @@ namespace analysis
                     return res;
                 };
 
-                var eqMargin = new Thickness(0, 0, 100, 15);
+                var eqMargin = new Thickness(0, 0, 75, 25);
                 var eqFontSize = 20f;
 
-                var accelBase = "1-cos(t)".Substitute("t", "(t/d*(2*pi))");
-                //var accelCoeff = $"s / abs({accelBase.Integrate("t").Substitute("t", "d")})";
-                var accelCoeff = $"s / ({accelBase.Integrate("t").Substitute("t", "d")})";
-                var accel = $"({accelCoeff}) * ({accelBase})";
+                // s_d = s(d)
                 sp.Children.Add(new CSharpMath.Avalonia.MathView()
                 {
-                    LaTeX = $"accel(t)={toLatex(accel)}",
+                    LaTeX = @"s_d=s(d)",
                     Margin = eqMargin,
                     FontSize = eqFontSize
                 });
 
-                var accelGiven = $"a=({mySimplify(accel)})".Substitute("t", "d/2").Solve("d");
+                Func<string,string> debugFormula = (f) => {
+                    System.Diagnostics.Debug.WriteLine(f);
+                    return f;
+                };
+
+                var accelBase = "1-cos(t)".Substitute("t", "(t/d*(2*pi))");
+                var accelCoeff = $"s_d / ({accelBase.Integrate("t").Substitute("t", "d")})";
+                var accel = $"({accelCoeff}) * ({accelBase})";
                 sp.Children.Add(new CSharpMath.Avalonia.MathView()
                 {
-                    LaTeX = $"d(a)={toLatex(accelGiven)}",
+                    LaTeX = debugFormula($"a(t)={toLatex(accel)}"),
+                    Margin = eqMargin,
+                    FontSize = eqFontSize
+                });
+
+                // a_max = a(d/2)
+                sp.Children.Add(new CSharpMath.Avalonia.MathView()
+                {
+                    LaTeX = debugFormula(@"a_{max}=a\left(\frac{d}{2}\right)"),
+                    Margin = eqMargin,
+                    FontSize = eqFontSize
+                });
+
+                var aMax = $"a_max={accel}".Substitute("t", "d/2").Solve("d");
+                sp.Children.Add(new CSharpMath.Avalonia.MathView()
+                {
+                    LaTeX = debugFormula(toLatex($"d={aMax}")),
                     Margin = eqMargin,
                     FontSize = eqFontSize
                 });
@@ -144,15 +169,23 @@ namespace analysis
                 var speed = $"s_0+{accel.Integrate("t")}";
                 sp.Children.Add(new CSharpMath.Avalonia.MathView()
                 {
-                    LaTeX = $"speed(t)={toLatex(speed)}",
+                    LaTeX = debugFormula($"s(t)={toLatex(speed)}"),
                     Margin = eqMargin,
                     FontSize = eqFontSize
                 });
 
-                var pos = $"p_0+{speed.Integrate("t") - speed.Integrate("t").Substitute("t", 0)}";
+                var pos = $"x_0+{speed.Integrate("t") - speed.Integrate("t").Substitute("t", 0)}";
                 sp.Children.Add(new CSharpMath.Avalonia.MathView()
                 {
-                    LaTeX = $"pos(t)={toLatex(pos)}",
+                    LaTeX = debugFormula($"x(t)={toLatex(pos)}"),
+                    Margin = eqMargin,
+                    FontSize = eqFontSize
+                });
+
+                var speedPos = $"x_d={pos}".Substitute("t", "d").Solve("s_d");
+                sp.Children.Add(new CSharpMath.Avalonia.MathView()
+                {
+                    LaTeX = debugFormula($"s(d)={toLatex(speedPos)}"),
                     Margin = eqMargin,
                     FontSize = eqFontSize
                 });
@@ -160,7 +193,7 @@ namespace analysis
                 var finalPos = $"{pos.Substitute("t", "d")}";
                 sp.Children.Add(new CSharpMath.Avalonia.MathView()
                 {
-                    LaTeX = $"pos(d)={toLatex(finalPos)}",
+                    LaTeX = debugFormula($"x(d)={toLatex(finalPos)}"),
                     Margin = eqMargin,
                     FontSize = eqFontSize
                 });
@@ -174,11 +207,11 @@ namespace analysis
 
                     var accelC = accel
                         .Substitute("d", input.duration)
-                        .Substitute("s", input.speedVariation)
+                        .Substitute("s_d", input.speedVariation)
                         .Compile("t");
                     var accelS = new OxyPlot.Series.LineSeries()
                     {
-                        Title = $"accel_{tag}",
+                        Title = $"a{tag}",
                         DataFieldX = "x",
                         DataFieldY = "y",
                         ItemsSource = SciToolkit.Range(
@@ -195,12 +228,12 @@ namespace analysis
 
                     var speedC = speed
                         .Substitute("d", input.duration)
-                        .Substitute("s", input.speedVariation)
+                        .Substitute("s_d", input.speedVariation)
                         .Substitute("s_0", input.initialSpeed)
                         .Compile("t");
                     var speedS = new OxyPlot.Series.LineSeries()
                     {
-                        Title = $"speed_{tag}",
+                        Title = $"s{tag}",
                         DataFieldX = "x",
                         DataFieldY = "y",
                         ItemsSource = SciToolkit.Range(
@@ -222,26 +255,17 @@ namespace analysis
                     };
                     cbSpeedToggle.Bind(CheckBox.IsCheckedProperty, new Binding("IsVisible", BindingMode.TwoWay) { Source = speedS });
                     cbSpeedToggle.PropertyChanged += (a, b) => { if (b.Property.Name == "IsChecked") pv.InvalidatePlot(); };
-                    pv.Model.Series.Add(speedS);
-
-                    // pv.Model.Annotations.Add(new OxyPlot.Annotations.TextAnnotation()
-                    // {
-                    //     TextPosition = new DataPoint(0, input.initialSpeed),
-                    //     Text = $"s0={input.initialSpeed}",
-                    //     TextHorizontalAlignment = OxyPlot.HorizontalAlignment.Right,
-                    //     TextVerticalAlignment = OxyPlot.VerticalAlignment.Bottom,
-                    //     StrokeThickness = 0
-                    // });                     
+                    pv.Model.Series.Add(speedS);                  
 
                     var posC = pos
                         .Substitute("d", input.duration)
-                        .Substitute("s", input.speedVariation)
+                        .Substitute("s_d", input.speedVariation)
                         .Substitute("s_0", input.initialSpeed)
-                        .Substitute("p_0", input.initialPos)
+                        .Substitute("x_0", input.initialPos)
                         .Compile("t");
                     var posS = new OxyPlot.Series.LineSeries()
                     {
-                        Title = $"pos_{tag}",
+                        Title = $"x{tag}",
                         DataFieldX = "x",
                         DataFieldY = "y",
                         ItemsSource = SciToolkit.Range(
@@ -302,7 +326,7 @@ namespace analysis
                 var timeTol = 1e-3;
                 var timeSlices = 100;
 
-                var pv1 = BuildGraph("a", new GraphInput
+                var pv1 = BuildGraph("1", new GraphInput
                 {
                     duration = motion_time.TotalSeconds * time_s_coeff,
                     initialSpeed = 0d,
@@ -310,7 +334,7 @@ namespace analysis
                     speedVariation = speedA_rev_sec * speed_rev_sec_coeff
                 }, colorIdxBase: 0, timeTol: timeTol, timeSlices: timeSlices);
 
-                var pv2 = BuildGraph("b", new GraphInput
+                var pv2 = BuildGraph("2", new GraphInput
                 {
                     prevPlotView = pv1.plotView,
                     t0 = pv1.input.t0 + pv1.input.duration,
