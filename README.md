@@ -122,7 +122,7 @@ var motion2_rev_sec = 0d;
 
 ## Example01
 
-[![](https://img.youtube.com/vi/dsn793ZnKGA/0.jpg)](https://youtu.be/dsn793ZnKGA)
+[![](https://img.youtube.com/vi/dsn793ZnKGA/0.jpg)](https://youtu.be/dsn793ZnKGA "Click to play on Youtube.com")
 
 ### code
 
