@@ -207,6 +207,8 @@ int main()
 
 ### plot (xlsx)
 
+This [workbook](analysis/calc.xlsx) can be used to view accel,speed,pos graph from given input data ( s<sub>0</sub>, s<sub>d</sub>, d, x<sub>0</sub> ).
+
 **accel**
 ![](data/img/example01_xlsx_accel.png)
 
