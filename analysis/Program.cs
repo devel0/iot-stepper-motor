@@ -303,15 +303,15 @@ namespace analysis
 
                     return res;
                 };
+                
+                var motion1_d = TimeSpan.FromMilliseconds(5000);
+                var motion1_rev_sec = 1d;
 
-                var wait_time = TimeSpan.FromMilliseconds(2150);
-                var motion_time = TimeSpan.FromMilliseconds(5000);
-                var speed_var_time = TimeSpan.FromMilliseconds(1000);
+                var motion2_d = TimeSpan.FromMilliseconds(2150);                
+                var motion2_rev_sec = 0d;
+
                 var pulse_rev = 400d;
-                var pulse_width = TimeSpan.FromMilliseconds(5e-3);
-
-                var speedA_rev_sec = 1d;
-                var speedB_rev_sec = 0d;
+                var pulse_width = TimeSpan.FromMilliseconds(5e-3);                                
 
                 // time: [us]
                 // speed: [pulse/us]
@@ -328,20 +328,20 @@ namespace analysis
 
                 var pv1 = BuildGraph("1", new GraphInput
                 {
-                    duration = motion_time.TotalSeconds * time_s_coeff,
+                    duration = motion1_d.TotalSeconds * time_s_coeff,
                     initialSpeed = 0d,
                     initialPos = 0d,
-                    speedVariation = speedA_rev_sec * speed_rev_sec_coeff
+                    speedVariation = motion1_rev_sec * speed_rev_sec_coeff
                 }, colorIdxBase: 0, timeTol: timeTol, timeSlices: timeSlices);
 
                 var pv2 = BuildGraph("2", new GraphInput
                 {
                     prevPlotView = pv1.plotView,
                     t0 = pv1.input.t0 + pv1.input.duration,
-                    duration = wait_time.TotalSeconds * time_s_coeff,
+                    duration = motion2_d.TotalSeconds * time_s_coeff,
                     initialSpeed = pv1.finalSpeedVal,
                     initialPos = pv1.finalPosVal,
-                    speedVariation = speedB_rev_sec * speed_rev_sec_coeff - pv1.finalSpeedVal
+                    speedVariation = motion2_rev_sec * speed_rev_sec_coeff - pv1.finalSpeedVal
                 }, colorIdxBase: 1, timeTol: timeTol, timeSlices: timeSlices);
 
                 Grid.SetRow(pv1.plotView, 1);
