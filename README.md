@@ -41,7 +41,7 @@ dotnet run
 
 For symbolic calculus [AngouriMath](https://github.com/asc-community/AngouriMath) library was used.
 
-- vars
+- vars ( code refs [a](https://github.com/devel0/iot-stepper-motor/blob/0a21b306125915c26b5c39f992fe5b0b4b8aa9dc/analysis/Program.cs#L152-L154) ; [aMax](https://github.com/devel0/iot-stepper-motor/blob/0a21b306125915c26b5c39f992fe5b0b4b8aa9dc/analysis/Program.cs#L170) ; [s](https://github.com/devel0/iot-stepper-motor/blob/0a21b306125915c26b5c39f992fe5b0b4b8aa9dc/analysis/Program.cs#L178) ; [s<sub>d</sub>](https://github.com/devel0/iot-stepper-motor/blob/0a21b306125915c26b5c39f992fe5b0b4b8aa9dc/analysis/Program.cs#L194) ; [x](https://github.com/devel0/iot-stepper-motor/blob/0a21b306125915c26b5c39f992fe5b0b4b8aa9dc/analysis/Program.cs#L186) ; [x<sub>d</sub>](https://github.com/devel0/iot-stepper-motor/blob/0a21b306125915c26b5c39f992fe5b0b4b8aa9dc/analysis/Program.cs#L202) )
     - **t** (time) ; **t<sub>0</sub>** (initial time) ; **t<sub>r</sub>** (time relative to t<sub>0</sub>)    
     - **a** (acceleration) ; **a<sub>max</sub>** (max accel when t=d/2)
     - **s** (speed) ; **s<sub>0</sub>** (initial speed) ; **s<sub>d</sub>** (speed at end of motion when t=d)
@@ -230,7 +230,9 @@ notes:
 
 ## Debugging
 
-to debug examples/example01.cpp (included through [src/debug-main.cpp](src/debug-main.cpp)) it may needed to select only 1 platform from `platformio.ini` so the launch.json will generate accordingly; todo that comment others platform, ie:
+- set example to start in [src/examples/example.h](src/examples/example.h) by setting a [define](https://github.com/devel0/iot-stepper-motor/blob/0a21b306125915c26b5c39f992fe5b0b4b8aa9dc/examples/example01/example.h#L6)
+- start debugging using C-S-p `PlatformIO: Start Debugging`
+- to debug examples/example01.cpp (included through [src/debug-main.cpp](src/debug-main.cpp)) it may needed to select only 1 platform from `platformio.ini` so the launch.json will generate accordingly; todo that comment others platform, ie:
 
 ```
 [env]
