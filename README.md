@@ -1,7 +1,7 @@
-# iot-scurve-stepper-motor
+# iot-stepper-motor
 
 <!-- TOC -->
-- [iot-scurve-stepper-motor](#iot-scurve-stepper-motor)
+- [iot-stepper-motor](#iot-stepper-motor)
   * [Description](#description)
   * [Quickstart](#quickstart)
   * [Analysis](#analysis)
@@ -25,9 +25,9 @@ Library to control stepper motor scurve motion type for ststm32 platform, mbed o
 
 ## Quickstart
 
-Install using vscode command palette `PlatformIO: New Terminal` referring to [platformio registry](https://platformio.org/lib/show/11636/iot-scurve-stepper-motor) cli mode doc.
+Install using vscode command palette `PlatformIO: New Terminal` referring to [platformio registry](https://platformio.org/lib/show/11636/iot-stepper-motor) cli mode doc.
 
-If got trouble during compile, remove `.pio/libdeps/nucleo_f446re/iot-scurve-stepper-motor/library.json`.
+If got trouble during compile, remove `.pio/libdeps/nucleo_f446re/iot-stepper-motor/library.json`.
 
 ## Analysis
 
