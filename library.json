@@ -30,7 +30,11 @@
     "export": {
         "exclude":
         [
-            "src/debug-main.cpp"            
+            "src/debug-main.cpp",
+            "thirdy",
+            "analysis",
+            "data",
+            "svg"
         ]
     }
 }
