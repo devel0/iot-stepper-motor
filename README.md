@@ -54,14 +54,15 @@ t_r = t - t_0
 s_d = s(d)
 $$ --> 
 
-<div align="center"><img style="background: white;" src="svg/cTV0ier9Gw.svg"></div>
+<div align="center"><img style="background: white;" src="https://render.githubusercontent.com/render/math?math=%5Clarge%0At_r%20%3D%20t%20-%20t_0%0A%5Cquad%0As_d%20%3D%20s(d)"></div>
 
 <!-- $$
 \large
 a(t_r)=\frac{s_{d}}{d}\cdot \left(1-\cos\left(\frac{t_r}{d}\cdot 2\cdot \pi\right)\right)
 $$ --> 
 
-<div align="center"><img style="background: white;" src="svg/f8nif0tK04.svg"></div>
+<br/>
+<div align="center"><img style="background: white;" src="https://render.githubusercontent.com/render/math?math=%5Clarge%0Aa(t_r)%3D%5Cfrac%7Bs_%7Bd%7D%7D%7Bd%7D%5Ccdot%20%5Cleft(1-%5Ccos%5Cleft(%5Cfrac%7Bt_r%7D%7Bd%7D%5Ccdot%202%5Ccdot%20%5Cpi%5Cright)%5Cright)"></div>
 
 <!-- $$
 \large
@@ -70,35 +71,40 @@ a_{max}=a\left(\frac{d}{2}\right)
 d = \left\{ \frac{2\cdot s_{d}}{a_{max}} \right\}
 $$ --> 
 
-<div align="center"><img style="background: white;" src="svg/6LALtacJmT.svg"></div>
+<br/>
+<div align="center"><img style="background: white;" src="https://render.githubusercontent.com/render/math?math=%5Clarge%0Aa_%7Bmax%7D%3Da%5Cleft(%5Cfrac%7Bd%7D%7B2%7D%5Cright)%0A%5Cquad%0Ad%20%3D%20%5Cleft%5C%7B%20%5Cfrac%7B2%5Ccdot%20s_%7Bd%7D%7D%7Ba_%7Bmax%7D%7D%20%5Cright%5C%7D"></div>
 
 <!-- $$
 \large
 s(t_r)=\frac{\frac{-1}{2}\cdot \sin\left(\frac{2\cdot \pi\cdot t_r}{d}\right)\cdot d\cdot s_{d}}{d\cdot \pi}+\frac{s_{d}\cdot t_r}{d}+s_{0}
 $$ --> 
 
-<div align="center"><img style="background: white;" src="svg/oQgs2EdYa7.svg"></div>
+<br/>
+<div align="center"><img style="background: white;" src="https://render.githubusercontent.com/render/math?math=%5Clarge%0As(t_r)%3D%5Cfrac%7B%5Cfrac%7B-1%7D%7B2%7D%5Ccdot%20%5Csin%5Cleft(%5Cfrac%7B2%5Ccdot%20%5Cpi%5Ccdot%20t_r%7D%7Bd%7D%5Cright)%5Ccdot%20d%5Ccdot%20s_%7Bd%7D%7D%7Bd%5Ccdot%20%5Cpi%7D%2B%5Cfrac%7Bs_%7Bd%7D%5Ccdot%20t_r%7D%7Bd%7D%2Bs_%7B0%7D"></div>
 
 <!-- $$
 \large
 x(t_r)=x_{0}+\frac{\frac{1}{4}\cdot \cos\left(\frac{2\cdot \pi\cdot t_r}{d}\right)\cdot {d}^{2}\cdot s_{d}}{d\cdot {\pi}^{2}}+\frac{\frac{1}{2}\cdot s_{d}\cdot {t_r}^{2}}{d}+s_{0}\cdot t_r-\frac{\frac{1}{4}\cdot d\cdot s_{d}}{{\pi}^{2}}
 $$ --> 
 
-<div align="center"><img style="background: white;" src="svg/MbArXPNUdW.svg"></div>
+<br/>
+<div align="center"><img style="background: white;" src="https://render.githubusercontent.com/render/math?math=%5Clarge%0Ax(t_r)%3Dx_%7B0%7D%2B%5Cfrac%7B%5Cfrac%7B1%7D%7B4%7D%5Ccdot%20%5Ccos%5Cleft(%5Cfrac%7B2%5Ccdot%20%5Cpi%5Ccdot%20t_r%7D%7Bd%7D%5Cright)%5Ccdot%20%7Bd%7D%5E%7B2%7D%5Ccdot%20s_%7Bd%7D%7D%7Bd%5Ccdot%20%7B%5Cpi%7D%5E%7B2%7D%7D%2B%5Cfrac%7B%5Cfrac%7B1%7D%7B2%7D%5Ccdot%20s_%7Bd%7D%5Ccdot%20%7Bt_r%7D%5E%7B2%7D%7D%7Bd%7D%2Bs_%7B0%7D%5Ccdot%20t_r-%5Cfrac%7B%5Cfrac%7B1%7D%7B4%7D%5Ccdot%20d%5Ccdot%20s_%7Bd%7D%7D%7B%7B%5Cpi%7D%5E%7B2%7D%7D"></div>
 
 <!-- $$
 \large
 s(d)=\left\{ \frac{2\cdot \left(-d\cdot s_{0}-x_{0}+x_{d}\right)}{d} \right\}
 $$ --> 
 
-<div align="center"><img style="background: white;" src="svg/5iqSOFwB3a.svg"></div>
+<br/>
+<div align="center"><img style="background: white;" src="https://render.githubusercontent.com/render/math?math=%5Clarge%0As(d)%3D%5Cleft%5C%7B%20%5Cfrac%7B2%5Ccdot%20%5Cleft(-d%5Ccdot%20s_%7B0%7D-x_%7B0%7D%2Bx_%7Bd%7D%5Cright)%7D%7Bd%7D%20%5Cright%5C%7D"></div>
 
 <!-- $$
 \large
 x(d)=d\cdot \left(s_{0}+\frac{1}{2}\cdot s_{d}\right)+x_{0}
 $$ --> 
 
-<div align="center"><img style="background: white;" src="svg/3fzGPln1kQ.svg"></div>
+<br/>
+<div align="center"><img style="background: white;" src="https://render.githubusercontent.com/render/math?math=%5Clarge%0Ax(d)%3Dd%5Ccdot%20%5Cleft(s_%7B0%7D%2B%5Cfrac%7B1%7D%7B2%7D%5Ccdot%20s_%7Bd%7D%5Cright)%2Bx_%7B0%7D"></div>
 
 ### Plot analysis (oxyplot)
 
