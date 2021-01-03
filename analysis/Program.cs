@@ -101,7 +101,7 @@ namespace analysis
                 spSide.Children.Add(cbFormulaToggle);
                 cbFormulaToggle.Bind(CheckBox.IsCheckedProperty, new Binding("IsVisible", BindingMode.TwoWay)
                 { Source = sp });
-                
+
                 var grRoot = new Grid() { Margin = new Thickness(10) };
                 grRoot.Children.Add(gr);
                 this.Content = grRoot;
@@ -135,17 +135,25 @@ namespace analysis
                     FontSize = eqFontSize
                 });
 
-                Func<string,string> debugFormula = (f) => {
+                Func<string, string> debugFormula = (f) =>
+                {
                     System.Diagnostics.Debug.WriteLine(f);
                     return f;
                 };
 
-                var accelBase = "1-cos(t)".Substitute("t", "(t/d*(2*pi))");
-                var accelCoeff = $"s_d / ({accelBase.Integrate("t").Substitute("t", "d")})";
+                sp.Children.Add(new CSharpMath.Avalonia.MathView()
+                {
+                    LaTeX = debugFormula("t_r=t-t_0"),
+                    Margin = eqMargin,
+                    FontSize = eqFontSize
+                });
+
+                var accelBase = "1-cos(t_r)".Substitute("t_r", "(t_r/d*(2*pi))");
+                var accelCoeff = $"s_d / ({accelBase.Integrate("t_r").Substitute("t_r", "d")})";
                 var accel = $"({accelCoeff}) * ({accelBase})";
                 sp.Children.Add(new CSharpMath.Avalonia.MathView()
                 {
-                    LaTeX = debugFormula($"a(t)={toLatex(accel)}"),
+                    LaTeX = debugFormula($"a(t_r)={toLatex(accel)}"),
                     Margin = eqMargin,
                     FontSize = eqFontSize
                 });
@@ -158,7 +166,7 @@ namespace analysis
                     FontSize = eqFontSize
                 });
 
-                var aMax = $"a_max={accel}".Substitute("t", "d/2").Solve("d");
+                var aMax = $"a_max={accel}".Substitute("t_r", "d/2").Solve("d");
                 sp.Children.Add(new CSharpMath.Avalonia.MathView()
                 {
                     LaTeX = debugFormula(toLatex($"d={aMax}")),
@@ -166,23 +174,23 @@ namespace analysis
                     FontSize = eqFontSize
                 });
 
-                var speed = $"s_0+{accel.Integrate("t")}";
+                var speed = $"s_0+{accel.Integrate("t_r")}";
                 sp.Children.Add(new CSharpMath.Avalonia.MathView()
                 {
-                    LaTeX = debugFormula($"s(t)={toLatex(speed)}"),
+                    LaTeX = debugFormula($"s(t_r)={toLatex(speed)}"),
                     Margin = eqMargin,
                     FontSize = eqFontSize
                 });
 
-                var pos = $"x_0+{speed.Integrate("t") - speed.Integrate("t").Substitute("t", 0)}";
+                var pos = $"x_0+{speed.Integrate("t_r") - speed.Integrate("t_r").Substitute("t_r", 0)}";
                 sp.Children.Add(new CSharpMath.Avalonia.MathView()
                 {
-                    LaTeX = debugFormula($"x(t)={toLatex(pos)}"),
+                    LaTeX = debugFormula($"x(t_r)={toLatex(pos)}"),
                     Margin = eqMargin,
                     FontSize = eqFontSize
                 });
 
-                var speedPos = $"x_d={pos}".Substitute("t", "d").Solve("s_d");
+                var speedPos = $"x_d={pos}".Substitute("t_r", "d").Solve("s_d");
                 sp.Children.Add(new CSharpMath.Avalonia.MathView()
                 {
                     LaTeX = debugFormula($"s(d)={toLatex(speedPos)}"),
@@ -190,7 +198,7 @@ namespace analysis
                     FontSize = eqFontSize
                 });
 
-                var finalPos = $"{pos.Substitute("t", "d")}";
+                var finalPos = $"{pos.Substitute("t_r", "d")}";
                 sp.Children.Add(new CSharpMath.Avalonia.MathView()
                 {
                     LaTeX = debugFormula($"x(d)={toLatex(finalPos)}"),
@@ -208,7 +216,7 @@ namespace analysis
                     var accelC = accel
                         .Substitute("d", input.duration)
                         .Substitute("s_d", input.speedVariation)
-                        .Compile("t");
+                        .Compile("t_r");
                     var accelS = new OxyPlot.Series.LineSeries()
                     {
                         Title = $"a{tag}",
@@ -230,7 +238,7 @@ namespace analysis
                         .Substitute("d", input.duration)
                         .Substitute("s_d", input.speedVariation)
                         .Substitute("s_0", input.initialSpeed)
-                        .Compile("t");
+                        .Compile("t_r");
                     var speedS = new OxyPlot.Series.LineSeries()
                     {
                         Title = $"s{tag}",
@@ -255,14 +263,14 @@ namespace analysis
                     };
                     cbSpeedToggle.Bind(CheckBox.IsCheckedProperty, new Binding("IsVisible", BindingMode.TwoWay) { Source = speedS });
                     cbSpeedToggle.PropertyChanged += (a, b) => { if (b.Property.Name == "IsChecked") pv.InvalidatePlot(); };
-                    pv.Model.Series.Add(speedS);                  
+                    pv.Model.Series.Add(speedS);
 
                     var posC = pos
                         .Substitute("d", input.duration)
                         .Substitute("s_d", input.speedVariation)
                         .Substitute("s_0", input.initialSpeed)
                         .Substitute("x_0", input.initialPos)
-                        .Compile("t");
+                        .Compile("t_r");
                     var posS = new OxyPlot.Series.LineSeries()
                     {
                         Title = $"x{tag}",
@@ -303,15 +311,15 @@ namespace analysis
 
                     return res;
                 };
-                
+
                 var motion1_d = TimeSpan.FromMilliseconds(5000);
                 var motion1_rev_sec = 1d;
 
-                var motion2_d = TimeSpan.FromMilliseconds(2150);                
+                var motion2_d = TimeSpan.FromMilliseconds(2150);
                 var motion2_rev_sec = 0d;
 
                 var pulse_rev = 400d;
-                var pulse_width = TimeSpan.FromMilliseconds(5e-3);                                
+                var pulse_width = TimeSpan.FromMilliseconds(5e-3);
 
                 // time: [us]
                 // speed: [pulse/us]
