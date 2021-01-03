@@ -46,6 +46,26 @@ void SCurveStepper::setSpeed(double speed_rev_sec, double durationSec)
     motion_start = cur_t;
     current_period_start = cur_t;
 }
+/*
+void SCurveStepper::setPos(double step, double durationSec)
+{
+    auto cur_t = timer.elapsed_time();
+
+    s0_speed_pus = current_speed_pus;
+    p0_step = current_pos_step;
+    d_us = durationSec * 1e6;
+    t0_us = chrono_us(cur_t);
+    pulse_executed = 0;
+    pulse_expected = 0;
+    pulse_excees = 0;
+    s_speed_pus = speed_rev_sec * pulse_rev * 1e-6 - s0_speed_pus;
+    pulse_expected_max = round(computePos(s0_speed_pus, p0_step, s_speed_pus, d_us)) - p0_step;
+    if (_state == SCurveStepperMotorState::unknown)
+        period_min_us = d_us;
+    _state = SCurveStepperMotorState::speed_changing;
+    motion_start = cur_t;
+    current_period_start = cur_t;
+}*/
 
 void SCurveStepper::pulseDownFn()
 {

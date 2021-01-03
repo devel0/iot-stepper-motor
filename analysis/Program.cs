@@ -127,6 +127,14 @@ namespace analysis
                 var eqMargin = new Thickness(0, 0, 75, 25);
                 var eqFontSize = 20f;
 
+                // t_r = t - t_0
+                sp.Children.Add(new CSharpMath.Avalonia.MathView()
+                {
+                    LaTeX = debugFormula("t_r=t-t_0"),
+                    Margin = eqMargin,
+                    FontSize = eqFontSize
+                });
+
                 // s_d = s(d)
                 sp.Children.Add(new CSharpMath.Avalonia.MathView()
                 {
@@ -139,14 +147,7 @@ namespace analysis
                 {
                     System.Diagnostics.Debug.WriteLine(f);
                     return f;
-                };
-
-                sp.Children.Add(new CSharpMath.Avalonia.MathView()
-                {
-                    LaTeX = debugFormula("t_r=t-t_0"),
-                    Margin = eqMargin,
-                    FontSize = eqFontSize
-                });
+                };                
 
                 var accelBase = "1-cos(t_r)".Substitute("t_r", "(t_r/d*(2*pi))");
                 var accelCoeff = $"s_d / ({accelBase.Integrate("t_r").Substitute("t_r", "d")})";

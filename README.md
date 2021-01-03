@@ -1,8 +1,27 @@
 # iot-scurve-stepper-motor
 
+<!-- TOC -->
+- [iot-scurve-stepper-motor](#iot-scurve-stepper-motor)
+  * [Description](#description)
+  * [Quickstart](#quickstart)
+  * [Analysis](#analysis)
+    + [Motion equations](#motion-equations)
+    + [Plot analysis (oxyplot)](#plot-analysis-oxyplot)
+  * [Example01](#example01)
+    + [code](#code)
+    + [plot (xlsx)](#plot-xlsx)
+    + [monitor](#monitor)
+    + [logic analyzer](#logic-analyzer)
+  * [TODO](#todo)
+  * [Debugging](#debugging)
+  * [How this project was built](#how-this-project-was-built)
+<!-- TOCEND -->
+
 ## Description
 
 :warning: this is a work in progress
+
+Library to control stepper motor scurve motion type for ststm32 platform, mbed os framework.
 
 ## Quickstart
 
@@ -10,9 +29,102 @@ Install using vscode command palette `PlatformIO: New Terminal` referring to [pl
 
 If got trouble during compile, remove `.pio/libdeps/nucleo_f446re/iot-scurve-stepper-motor/library.json`.
 
-## Examples
+## Analysis
+
+```sh
+git submodule update --init --recursive
+cd analysis
+dotnet run
+```
+
+### Motion equations
+
+For symbolic calculus [AngouriMath](https://github.com/asc-community/AngouriMath) library was used.
+
+- vars
+    - **t** (time) ; **t<sub>0</sub>** (initial time) ; **t<sub>r</sub>** (time relative to t<sub>0</sub>)    
+    - **a** (acceleration) ; **a<sub>max</sub>** (max accel when t=d/2)
+    - **s** (speed) ; **s<sub>0</sub>** (initial speed) ; **s<sub>d</sub>** (speed at end of motion when t=d)
+    - **x** (position) ; **x<sub>0</sub>** (initial position) ; **s<sub>d</sub>** (position at end of motion when t=d)
+
+<!-- $$
+\large
+t_r = t - t_0
+\quad
+s_d = s(d)
+$$ --> 
+
+<div align="center"><img style="background: white;" src="svg/cTV0ier9Gw.svg"></div>
+
+<!-- $$
+\large
+a(t_r)=\frac{s_{d}}{d}\cdot \left(1-\cos\left(\frac{t_r}{d}\cdot 2\cdot \pi\right)\right)
+$$ --> 
+
+<div align="center"><img style="background: white;" src="svg/f8nif0tK04.svg"></div>
+
+<!-- $$
+\large
+a_{max}=a\left(\frac{d}{2}\right)
+\quad
+d = \left\{ \frac{2\cdot s_{d}}{a_{max}} \right\}
+$$ --> 
+
+<div align="center"><img style="background: white;" src="svg/6LALtacJmT.svg"></div>
+
+<!-- $$
+\large
+s(t_r)=\frac{\frac{-1}{2}\cdot \sin\left(\frac{2\cdot \pi\cdot t_r}{d}\right)\cdot d\cdot s_{d}}{d\cdot \pi}+\frac{s_{d}\cdot t_r}{d}+s_{0}
+$$ --> 
+
+<div align="center"><img style="background: white;" src="svg/oQgs2EdYa7.svg"></div>
+
+<!-- $$
+\large
+x(t_r)=x_{0}+\frac{\frac{1}{4}\cdot \cos\left(\frac{2\cdot \pi\cdot t_r}{d}\right)\cdot {d}^{2}\cdot s_{d}}{d\cdot {\pi}^{2}}+\frac{\frac{1}{2}\cdot s_{d}\cdot {t_r}^{2}}{d}+s_{0}\cdot t_r-\frac{\frac{1}{4}\cdot d\cdot s_{d}}{{\pi}^{2}}
+$$ --> 
+
+<div align="center"><img style="background: white;" src="svg/MbArXPNUdW.svg"></div>
+
+<!-- $$
+\large
+s(d)=\left\{ \frac{2\cdot \left(-d\cdot s_{0}-x_{0}+x_{d}\right)}{d} \right\}
+$$ --> 
+
+<div align="center"><img style="background: white;" src="svg/5iqSOFwB3a.svg"></div>
+
+<!-- $$
+\large
+x(d)=d\cdot \left(s_{0}+\frac{1}{2}\cdot s_{d}\right)+x_{0}
+$$ --> 
+
+<div align="center"><img style="background: white;" src="svg/3fzGPln1kQ.svg"></div>
+
+### Plot analysis (oxyplot)
+
+Follow graph shows the example described in the [analysis](https://github.com/devel0/iot-stepper-motor/blob/665799d9573e7852d47b750c6ae1fa2c27a3a87b/analysis/Program.cs#L307)
+
+```csharp
+var motion1_d = TimeSpan.FromMilliseconds(5000);
+var motion1_rev_sec = 1d;
+
+var motion2_d = TimeSpan.FromMilliseconds(2150);                
+var motion2_rev_sec = 0d;
+```
+
+![](data/img/analysis.png)
+
+## Example01
+
+### code
 
 ```cpp
+// Example01
+// - go to high speed 6rev/s in 0.25s
+// - cruise speed for more 0.75s
+// - go to low speed 0.1rev/s in 0.25s
+// - cruise speed for more 0.25s
+
 #include <mbed.h>
 
 #include <number-utils.h>
@@ -32,7 +144,7 @@ int main()
     auto pulse_rev = 400;
     auto pulse_width = 5us;
 
-    auto speed_up_time = 2000ms;
+    auto speed_up_time = 1000ms;
     auto speed_high_rps = 6.0;
 
     auto speed_down_time = 500ms;
@@ -54,9 +166,7 @@ int main()
     while (true)
     {
         auto t_now = timer.elapsed_time();
-
-        auto m_state = m.state();
-
+        
         if (!motion_issued)
         {
             motion_issued = true;
@@ -70,7 +180,8 @@ int main()
         }
         if (t_now - t_start > speed_up_time + speed_down_time)
         {
-            m.debugStats();
+            m.debugStats(true);
+            
             motion_issued = stop_issued = false;
         }
 
@@ -79,17 +190,43 @@ int main()
 }
 ```
 
-![](data/img/example01.png)
+### plot (xlsx)
 
-## Analysis
+**accel**
+![](data/img/example01_xlsx_accel.png)
 
-```sh
-git submodule update --init --recursive
-cd analysis
-dotnet run
+**cruise**
+![](data/img/example01_xlsx_cruise.png)
+
+**decel**
+![](data/img/example01_xlsx_decel.png)
+
+### monitor
+
+C-S-p `PlatformIO: Serial Monitor` ( or directly C-A-s )
+
+```
+m[1] pulse(exe/exp/max): 305/305/305   period_min: 209.000 ms   fMax: 4.785 kHz   pos: 1.980e5 step (∆:1.752e3)
+m[1] pulse(exe/exp/max): 305/305/305   period_min: 209.000 ms   fMax: 4.785 kHz   pos: 1.997e5 step (∆:1.752e3)
+m[1] pulse(exe/exp/max): 305/305/305   period_min: 209.000 ms   fMax: 4.785 kHz   pos: 2.015e5 step (∆:1.752e3)
+m[1] pulse(exe/exp/max): 305/305/305   period_min: 209.000 ms   fMax: 4.785 kHz   pos: 2.032e5 step (∆:1.752e3)
+m[1] pulse(exe/exp/max): 305/305/305   period_min: 209.000 ms   fMax: 4.785 kHz   pos: 2.050e5 step (∆:1.751e3)
+m[1] pulse(exe/exp/max): 305/305/305   period_min: 209.000 ms   fMax: 4.785 kHz   pos: 2.067e5 step (∆:1.752e3)
 ```
 
-![](data/img/analysis.png)
+notes:
+- pulse(exe/exp/max) related to last part of motion ( decel )
+- period_min, fMax measure minimum period and max pulse freq experienced from program start
+- pos is the absolute position ( steps ) while ∆ is the diff from previous ( note that there are some difference caused by the cruise phase where there aren't control over the expected pulses but regulated by a timer; here there are some improvements todo )
+
+### logic analyzer
+
+![](data/img/example01_logic.png)
+
+## TODO
+
+- move by position
+- control direction
 
 ## Debugging
 

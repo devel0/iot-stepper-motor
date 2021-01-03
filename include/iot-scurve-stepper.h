@@ -79,6 +79,8 @@ public:
     int pulseRev() const { return pulse_rev; }
     /// current speed ( rev/sec )
     double currentSpeed() const { return current_speed_pus * 1e-6 / pulse_rev; }
+    /// current pos ( step )
+    //double currentPos() const { return current_pos_step; }
     /// pulse executed last motion
     int pulseExecuted() const { return pulse_executed; }
     /// pulse expected last motion
@@ -86,6 +88,9 @@ public:
 
     /// change from current to given speed ( rev/sec ) in given duration time ( sec )
     void setSpeed(double revSec, double durationSec);
+
+    /// change from current pos to given one ( steps ) in given duration time ( sec )
+    void setPos(double step, double durationSec);
 
     void control();
 
