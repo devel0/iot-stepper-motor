@@ -45,11 +45,18 @@ dotnet run
 
 For symbolic calculus [AngouriMath](https://github.com/asc-community/AngouriMath) library was used.
 
-- vars ( code refs [a](https://github.com/devel0/iot-stepper-motor/blob/0a21b306125915c26b5c39f992fe5b0b4b8aa9dc/analysis/Program.cs#L152-L154) ; [aMax](https://github.com/devel0/iot-stepper-motor/blob/0a21b306125915c26b5c39f992fe5b0b4b8aa9dc/analysis/Program.cs#L170) ; [s](https://github.com/devel0/iot-stepper-motor/blob/0a21b306125915c26b5c39f992fe5b0b4b8aa9dc/analysis/Program.cs#L178) ; [s<sub>d</sub>](https://github.com/devel0/iot-stepper-motor/blob/0a21b306125915c26b5c39f992fe5b0b4b8aa9dc/analysis/Program.cs#L194) ; [x](https://github.com/devel0/iot-stepper-motor/blob/0a21b306125915c26b5c39f992fe5b0b4b8aa9dc/analysis/Program.cs#L186) ; [x<sub>d</sub>](https://github.com/devel0/iot-stepper-motor/blob/0a21b306125915c26b5c39f992fe5b0b4b8aa9dc/analysis/Program.cs#L202) )
+- vars ( code refs [a][1] ; [aMax][2] ; [s][3] ; [s<sub>d</sub>][4] ; [x][5] ; [x<sub>d</sub>][6] )
     - **t** (time) ; **t<sub>0</sub>** (initial time) ; **t<sub>r</sub>** (time relative to t<sub>0</sub>)    
     - **a** (acceleration) ; **a<sub>max</sub>** (max accel when t=d/2)
     - **s** (speed) ; **s<sub>0</sub>** (initial speed) ; **s<sub>d</sub>** (speed at end of motion when t=d)
     - **x** (position) ; **x<sub>0</sub>** (initial position) ; **s<sub>d</sub>** (position at end of motion when t=d)
+
+[1]: https://github.com/devel0/iot-stepper-motor/blob/0a21b306125915c26b5c39f992fe5b0b4b8aa9dc/analysis/Program.cs#L152-L154
+[2]: https://github.com/devel0/iot-stepper-motor/blob/0a21b306125915c26b5c39f992fe5b0b4b8aa9dc/analysis/Program.cs#L170
+[3]: https://github.com/devel0/iot-stepper-motor/blob/0a21b306125915c26b5c39f992fe5b0b4b8aa9dc/analysis/Program.cs#L178
+[4]: https://github.com/devel0/iot-stepper-motor/blob/0a21b306125915c26b5c39f992fe5b0b4b8aa9dc/analysis/Program.cs#L194
+[5]: https://github.com/devel0/iot-stepper-motor/blob/0a21b306125915c26b5c39f992fe5b0b4b8aa9dc/analysis/Program.cs#L186
+[6]: https://github.com/devel0/iot-stepper-motor/blob/0a21b306125915c26b5c39f992fe5b0b4b8aa9dc/analysis/Program.cs#L202
 
 <!-- $$
 \large
