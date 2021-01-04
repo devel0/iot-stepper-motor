@@ -122,6 +122,8 @@ var motion2_d = TimeSpan.FromMilliseconds(2150);
 var motion2_rev_sec = 0d;
 ```
 
+note: here only accel/decel considered (cruise not included)
+
 ![](data/img/analysis.png)
 
 ## Example01
