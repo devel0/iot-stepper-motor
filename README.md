@@ -13,7 +13,7 @@
     + [code](#code)
     + [plot (xlsx)](#plot-xlsx)
     + [monitor](#monitor)
-    + [examples wirings](#examples-wirings)
+  * [Examples wirings](#examples-wirings)
       - [nucleo-64 **stm32-f446re**](#nucleo-64-stm32-f446re)
       - [nucleo-144 **stm32-f767zi**](#nucleo-144-stm32-f767zi)
   * [TODO](#todo)
@@ -239,7 +239,7 @@ notes:
 - period_min, fMax measure minimum period and max pulse freq experienced from program start
 - pos is the absolute position ( steps ) while ∆ is the diff from previous ( note that there are some difference caused by the cruise phase where there aren't control over the expected pulses but regulated by a timer; here there are some improvements todo )
 
-### examples wirings
+## Examples wirings
 
 from [examples/example.h](examples/example.h)
 
