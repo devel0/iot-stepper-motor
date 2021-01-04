@@ -312,7 +312,7 @@ from [examples/example.h](examples/example.h)
 
 ## Debugging
 
-- set example to start in [examples/example.h](src/examples/example.h) by setting a [define](https://github.com/devel0/iot-stepper-motor/blob/0a21b306125915c26b5c39f992fe5b0b4b8aa9dc/examples/example01/example.h#L6)
+- set example to start in [examples/example.h](examples/example.h) by setting a [define](https://github.com/devel0/iot-stepper-motor/blob/0a21b306125915c26b5c39f992fe5b0b4b8aa9dc/examples/example01/example.h#L6)
 - start debugging using C-S-p `PlatformIO: Start Debugging`
 - to debug examples/example01.cpp (included through [src/debug-main.cpp](src/debug-main.cpp)) it may needed to select only 1 platform from `platformio.ini` so the launch.json will generate accordingly; todo that comment others platform, ie:
 
