@@ -40,12 +40,12 @@ class SCurveStepper
     // motion: start pos
     double p0_step;    
     // motion: start speed (pulse/us)
-    double s0_speed_pus;
+    double s0_pus;
     // motion: start setSpeed timestamp (chrono)
     std::chrono::microseconds motion_start;    
 
     // motion: speed variation (pulse/us)
-    double s_speed_pus;    
+    double s_d_pus;    
     // motion: duration (us)
     double d_us;
     // motion: step expected till now
@@ -96,16 +96,16 @@ public:
 
     void debugStats(bool block_on_error = true);
     
-    /// compute accel from given speed s, duration d and time t
-    double computeAccel(double s, double d, double t);
-    /// compute duration from given speed s and acceleration a
-    double computeDuration(double s, double a);
-    /// compute speed from given initial speed s0, speed variation s (when t=d), duration d and time t
-    double computeSpeed(double s0, double s, double d, double t);
-    /// compute position from given initial speed s0, initial pos p0, speed variation s (when t=d), duration d and time t
-    double computePos(double s0, double p0, double s, double d, double t);
-    /// compute position from given initial speed s0, initial pos p0, speed variation s (when t=d), duration d
-    double computePos(double s0, double p0, double s, double d);
+    /// compute accel from given speed s_d, duration d and time t_r
+    double computeAccel(double s_d, double d, double t);
+    /// compute duration from given speed s_d and acceleration a
+    double computeDuration(double s_d, double a);
+    /// compute speed from given initial speed s0, speed variation s_d (when t_r=d), duration d and time t_r
+    double computeSpeed(double s0, double s_d, double d, double t_r);
+    /// compute position from given initial speed s0, initial pos p0, speed variation s (when t_r=d), duration d and time t_r
+    double computePos(double s0, double p0, double s_d, double d, double t_r);
+    /// compute position from given initial speed s0, initial pos p0, speed variation s (when t_r=d), duration d
+    double computePos(double s0, double p0, double s_d, double d);
     
 };
 

@@ -3,7 +3,7 @@
 
 #include <mbed.h>
 
-#define EXAMPLE02 // set example to run in debug
+#define EXAMPLE01 // set example to run in debug
 
 #if defined(STM32F767xx)
 #define M1_PIN PinName::PF_1

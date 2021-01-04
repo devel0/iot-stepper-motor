@@ -31,15 +31,15 @@ void SCurveStepper::setSpeed(double speed_rev_sec, double durationSec)
 {
     auto cur_t = timer.elapsed_time();
 
-    s0_speed_pus = current_speed_pus;
+    s0_pus = current_speed_pus;
     p0_step = current_pos_step;
     d_us = durationSec * 1e6;
     t0_us = chrono_us(cur_t);
     pulse_executed = 0;
     pulse_expected = 0;
     pulse_excees = 0;
-    s_speed_pus = speed_rev_sec * pulse_rev * 1e-6 - s0_speed_pus;
-    pulse_expected_max = round(computePos(s0_speed_pus, p0_step, s_speed_pus, d_us)) - p0_step;
+    s_d_pus = speed_rev_sec * pulse_rev * 1e-6 - s0_pus;
+    pulse_expected_max = round(computePos(s0_pus, p0_step, s_d_pus, d_us)) - p0_step;
     if (_state == SCurveStepperMotorState::unknown)
         period_min_us = d_us;
     _state = SCurveStepperMotorState::speed_changing;
@@ -80,9 +80,9 @@ void SCurveStepper::control()
     auto cur_t = timer.elapsed_time();
 
     double cur_t_us = chrono_us(cur_t);
-    double t_us = cur_t_us - chrono_us(motion_start);
+    double t_r_us = cur_t_us - chrono_us(motion_start);
 
-    if (t_us >= d_us && pulse_executed >= pulse_expected_max)
+    if (t_r_us >= d_us && pulse_executed >= pulse_expected_max)
         _state = SCurveStepperMotorState::cruise;
 
     switch (_state)
@@ -118,9 +118,9 @@ void SCurveStepper::control()
 
     case SCurveStepperMotorState::speed_changing:
     {
-        current_speed_pus = computeSpeed(s0_speed_pus, s_speed_pus, d_us, t_us);
+        current_speed_pus = computeSpeed(s0_pus, s_d_pus, d_us, t_r_us);
 
-        pulse_expected = round(computePos(s0_speed_pus, p0_step, s_speed_pus, d_us, t_us)) - p0_step;
+        pulse_expected = round(computePos(s0_pus, p0_step, s_d_pus, d_us, t_r_us)) - p0_step;
 
         if (current_speed_pus != 0)
         {
@@ -128,7 +128,7 @@ void SCurveStepper::control()
 
             if (pulse_pin != 1)
             {
-                bool time_exceeded = t_us > d_us;
+                bool time_exceeded = t_r_us > d_us;
                 auto now_period_us = chrono_us(cur_t - current_period_start);
                 // adjust
                 double rp = current_period_us;
@@ -156,7 +156,7 @@ void SCurveStepper::control()
                         current_period_start = cur_t;
                         pulse_pin = 1;
                         pulse_down.attach(callback(this, &SCurveStepper::pulseDownFn), pulse_width_min);
-                        if (s0_speed_pus > s_speed_pus)
+                        if (s0_pus > s_d_pus)
                             --current_pos_step;
                         else
                             ++current_pos_step;
@@ -192,9 +192,9 @@ void SCurveStepper::debugStats(bool block_on_error)
     }
 }
 
-double SCurveStepper::computeAccel(double s, double d, double t)
+double SCurveStepper::computeAccel(double s_d, double d, double t_r)
 {
-    return s / d * (1 - cos(t / d * _2PI));
+    return s_d / d * (1 - cos(t_r / d * _2PI));
 }
 
 double SCurveStepper::computeDuration(double s, double a)
@@ -202,17 +202,17 @@ double SCurveStepper::computeDuration(double s, double a)
     return 2 * s / a;
 }
 
-double SCurveStepper::computeSpeed(double s0, double s, double d, double t)
+double SCurveStepper::computeSpeed(double s0, double s_d, double d, double t_r)
 {
-    return -0.5 * sin(_2PI * t / d) * d * s / (d * PI) + s * t / d + s0;
+    return -0.5 * sin(_2PI * t_r / d) * d * s_d / (d * PI) + s_d * t_r / d + s0;
 }
 
-double SCurveStepper::computePos(double s0, double p0, double s, double d, double t)
+double SCurveStepper::computePos(double s0, double p0, double s_d, double d, double t_r)
 {
-    return (.25 * cos(_2PI * t / d) * d * d / (d * _PI2) - .25 * d / _PI2 + .5 * t * t / d) * s + p0 + s0 * t;
+    return (.25 * cos(_2PI * t_r / d) * d * d / (d * _PI2) - .25 * d / _PI2 + .5 * t_r * t_r / d) * s_d + p0 + s0 * t_r;
 }
 
-double SCurveStepper::computePos(double s0, double p0, double s, double d)
+double SCurveStepper::computePos(double s0, double p0, double s_d, double d)
 {
-    return d * (0.5 * s + s0) + p0;
+    return d * (0.5 * s_d + s0) + p0;
 }
