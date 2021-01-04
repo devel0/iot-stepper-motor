@@ -1,5 +1,9 @@
 # iot-stepper-motor
 
+[API](data/api/Classes/classSCurveStepper.md)
+
+<br/>
+
 <!-- TOC -->
 - [iot-stepper-motor](#iot-stepper-motor)
   * [Description](#description)
