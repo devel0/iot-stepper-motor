@@ -295,3 +295,5 @@ __pycache__/
 *.xlsx#
 
 svg/
+
+xml/
