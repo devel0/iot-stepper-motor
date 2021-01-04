@@ -31,25 +31,25 @@ s-curve shaped speed profile stepper motor control
 
 |                | Name           |
 | -------------- | -------------- |
-|  | **[SCurveStepper](Classes/classSCurveStepper.md#function-scurvestepper)**(int __tag, Timer & _timer, DigitalOut & _pulsePin, int _pulse_rev, std::chrono::microseconds _pulse_width_min =20us) <br>Construct a new [SCurveStepper](Classes/classSCurveStepper.md) object.  |
-| int | **[tag](Classes/classSCurveStepper.md#function-tag)**() const <br>motor info tag  |
-| int | **[phaseTag](Classes/classSCurveStepper.md#function-phasetag)**() const <br>current motion tag custom info  |
-| void | **[setPhaseTag](Classes/classSCurveStepper.md#function-setphasetag)**(int _phase_tag) <br>set current motion tag custom info  |
-| SCurveStepperMotorState | **[state](Classes/classSCurveStepper.md#function-state)**() const <br>current motor state  |
-| std::chrono::microseconds | **[motionStart](Classes/classSCurveStepper.md#function-motionstart)**() const <br>latest motion start timestamp  |
-| int | **[pulseRev](Classes/classSCurveStepper.md#function-pulserev)**() const <br>current pulse rev config  |
-| double | **[currentSpeed](Classes/classSCurveStepper.md#function-currentspeed)**() const <br>actual motor speed  |
-| int | **[pulseExecuted](Classes/classSCurveStepper.md#function-pulseexecuted)**() const <br>pulse executed last motion  |
-| int | **[pulseExpected](Classes/classSCurveStepper.md#function-pulseexpected)**() const <br>pulse expected last motion  |
-| void | **[setSpeed](Classes/classSCurveStepper.md#function-setspeed)**(double revSec, double durationSec) <br>change from current to given speed ( rev/sec ) in given duration time ( sec )  |
-| void | **[setPos](Classes/classSCurveStepper.md#function-setpos)**(double step, double durationSec) <br>change from current pos to given one ( steps ) in given duration time ( sec )  |
-| void | **[control](Classes/classSCurveStepper.md#function-control)**() <br>control process ( execute this in a priority loop )  |
-| void | **[debugStats](Classes/classSCurveStepper.md#function-debugstats)**(bool block_on_error =true) <br>print to monitor some motion info  |
-| double | **[computeAccel](Classes/classSCurveStepper.md#function-computeaccel)**(double s_d, double d, double t_r) <br>compute accel from given speed s_d, duration d and time t_r  |
-| double | **[computeDuration](Classes/classSCurveStepper.md#function-computeduration)**(double s_d, double a) <br>compute duration from given speed s_d and acceleration a  |
-| double | **[computeSpeed](Classes/classSCurveStepper.md#function-computespeed)**(double s0, double s_d, double d, double t_r) <br>compute speed from given initial speed s0, speed variation s_d (when t_r=d), duration d and time t_r  |
-| double | **[computePos](Classes/classSCurveStepper.md#function-computepos)**(double s0, double p0, double s_d, double d, double t_r) <br>compute position from given initial speed s0, initial pos p0, speed variation s (when t_r=d), duration d and time t_r  |
-| double | **[computePos](Classes/classSCurveStepper.md#function-computepos)**(double s0, double p0, double s_d, double d) <br>compute position from given initial speed s0, initial pos p0, speed variation s (when t_r=d), duration d  |
+|  | **[SCurveStepper](classSCurveStepper.md#function-scurvestepper)**(int __tag, Timer & _timer, DigitalOut & _pulsePin, int _pulse_rev, std::chrono::microseconds _pulse_width_min =20us) <br>Construct a new [SCurveStepper](classSCurveStepper.md) object.  |
+| int | **[tag](classSCurveStepper.md#function-tag)**() const <br>motor info tag  |
+| int | **[phaseTag](classSCurveStepper.md#function-phasetag)**() const <br>current motion tag custom info  |
+| void | **[setPhaseTag](classSCurveStepper.md#function-setphasetag)**(int _phase_tag) <br>set current motion tag custom info  |
+| SCurveStepperMotorState | **[state](classSCurveStepper.md#function-state)**() const <br>current motor state  |
+| std::chrono::microseconds | **[motionStart](classSCurveStepper.md#function-motionstart)**() const <br>latest motion start timestamp  |
+| int | **[pulseRev](classSCurveStepper.md#function-pulserev)**() const <br>current pulse rev config  |
+| double | **[currentSpeed](classSCurveStepper.md#function-currentspeed)**() const <br>actual motor speed  |
+| int | **[pulseExecuted](classSCurveStepper.md#function-pulseexecuted)**() const <br>pulse executed last motion  |
+| int | **[pulseExpected](classSCurveStepper.md#function-pulseexpected)**() const <br>pulse expected last motion  |
+| void | **[setSpeed](classSCurveStepper.md#function-setspeed)**(double revSec, double durationSec) <br>change from current to given speed ( rev/sec ) in given duration time ( sec )  |
+| void | **[setPos](classSCurveStepper.md#function-setpos)**(double step, double durationSec) <br>change from current pos to given one ( steps ) in given duration time ( sec )  |
+| void | **[control](classSCurveStepper.md#function-control)**() <br>control process ( execute this in a priority loop )  |
+| void | **[debugStats](classSCurveStepper.md#function-debugstats)**(bool block_on_error =true) <br>print to monitor some motion info  |
+| double | **[computeAccel](classSCurveStepper.md#function-computeaccel)**(double s_d, double d, double t_r) <br>compute accel from given speed s_d, duration d and time t_r  |
+| double | **[computeDuration](classSCurveStepper.md#function-computeduration)**(double s_d, double a) <br>compute duration from given speed s_d and acceleration a  |
+| double | **[computeSpeed](classSCurveStepper.md#function-computespeed)**(double s0, double s_d, double d, double t_r) <br>compute speed from given initial speed s0, speed variation s_d (when t_r=d), duration d and time t_r  |
+| double | **[computePos](classSCurveStepper.md#function-computepos)**(double s0, double p0, double s_d, double d, double t_r) <br>compute position from given initial speed s0, initial pos p0, speed variation s (when t_r=d), duration d and time t_r  |
+| double | **[computePos](classSCurveStepper.md#function-computepos)**(double s0, double p0, double s_d, double d) <br>compute position from given initial speed s0, initial pos p0, speed variation s (when t_r=d), duration d  |
 
 
 
@@ -85,7 +85,7 @@ SCurveStepper(
 )
 ```
 
-Construct a new [SCurveStepper](Classes/classSCurveStepper.md) object. 
+Construct a new [SCurveStepper](classSCurveStepper.md) object. 
 
 **Parameters**: 
 
@@ -859,4 +859,4 @@ compute position from given initial speed s0, initial pos p0, speed variation s 
 
 -------------------------------
 
-Updated on  4 January 2021 at 08:15:32 CET
+Updated on  4 January 2021 at 08:20:30 CET
