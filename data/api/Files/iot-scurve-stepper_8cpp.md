@@ -49,8 +49,6 @@ SCurveStepper::SCurveStepper(int __tag,
 
 {
     _tag = __tag;
-    phase_tag = 0;
-    
     pulse_rev = _pulse_rev;
     pulse_width_min = _pulse_width_min;
 
@@ -156,9 +154,7 @@ void SCurveStepper::control()
     {
         current_speed_pus = computeSpeed(s0_pus, s_d_pus, d_us, t_r_us);
 
-        auto x_t_r = computePos(s0_pus, p0_step, s_d_pus, d_us, t_r_us);
-
-        pulse_expected = round(x_t_r) - p0_step;
+        pulse_expected = round(computePos(s0_pus, p0_step, s_d_pus, d_us, t_r_us)) - p0_step;
 
         if (current_speed_pus != 0)
         {
@@ -194,7 +190,7 @@ void SCurveStepper::control()
                         current_period_start = cur_t;
                         pulse_pin = 1;
                         pulse_down.attach(callback(this, &SCurveStepper::pulseDownFn), pulse_width_min);
-                        if (x_t_r < 0)
+                        if (s0_pus > s_d_pus)
                             --current_pos_step;
                         else
                             ++current_pos_step;
@@ -259,4 +255,4 @@ double SCurveStepper::computePos(double s0, double p0, double s_d, double d)
 
 -------------------------------
 
-Updated on  4 January 2021 at 08:15:32 CET
+Updated on  4 January 2021 at 20:14:44 CET

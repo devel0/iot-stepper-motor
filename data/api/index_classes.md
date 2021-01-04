@@ -8,10 +8,10 @@ title: Classes
 
 
 
-* **class [SCurveStepper](Classes/classSCurveStepper.md)** <br>s-curve shaped speed profile stepper motor control 
+* **class [SCurveStepper](https://github.com/devel0/iot-stepper-motor/tree/main/data/api/Classes/classSCurveStepper.md)** 
 
 
 
 -------------------------------
 
-Updated on  4 January 2021 at 08:15:32 CET
+Updated on  4 January 2021 at 20:14:44 CET
