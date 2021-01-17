@@ -2,27 +2,26 @@
 
 [API](data/api/Classes/classSCurveStepper.md)
 
-<br/>
+<hr/>
 
 <!-- TOC -->
-- [iot-stepper-motor](#iot-stepper-motor)
-  * [Description](#description)
-  * [Quickstart](#quickstart)
-  * [Analysis](#analysis)
-    + [Motion equations](#motion-equations)
-    + [Plot analysis (oxyplot)](#plot-analysis-oxyplot)
-  * [Example01](#example01)
-    + [logic analyzer](#logic-analyzer)
-    + [video](#video)
-    + [code](#code)
-    + [plot (xlsx)](#plot-xlsx)
-    + [monitor](#monitor)
-  * [Examples wirings](#examples-wirings)
-      - [nucleo-64 **stm32-f446re**](#nucleo-64-stm32-f446re)
-      - [nucleo-144 **stm32-f767zi**](#nucleo-144-stm32-f767zi)
-  * [TODO](#todo)
-  * [Debugging](#debugging)
-  * [How this project was built](#how-this-project-was-built)
+* [Description](#description)
+* [Quickstart](#quickstart)
+* [Analysis](#analysis)
+  + [Motion equations](#motion-equations)
+  + [Plot analysis (oxyplot)](#plot-analysis-oxyplot)
+* [Example01](#example01)
+  + [logic analyzer](#logic-analyzer)
+  + [video](#video)
+  + [code](#code)
+  + [plot (xlsx)](#plot-xlsx)
+  + [monitor](#monitor)
+* [Examples wirings](#examples-wirings)
+    - [nucleo-64 **stm32-f446re**](#nucleo-64-stm32-f446re)
+    - [nucleo-144 **stm32-f767zi**](#nucleo-144-stm32-f767zi)
+* [TODO](#todo)
+* [Debugging](#debugging)
+* [How this project was built](#how-this-project-was-built)
 <!-- TOCEND -->
 
 ## Description
