@@ -255,67 +255,11 @@ notes:
 
 from [examples/example.h](examples/example.h)
 
-#### nucleo-64 **stm32-f446re**
-```
-                      _____                                  _____
-           (M1) PC10 | · · | PC11 (M3)             (M5) PC9 | · · | PC8 (M7)
-           (M2) PC12 | · · | PD2  (M4)             (M6) PB8 | · · | PC6 (M8)
-                 VDD | · · | E5V                   (M9) PB9 | · · | PC5 (M10)
-               BOOT0 | · · | GND                       AVDD | · · | U5V
-                  NC | · · | NC                         GND | · · | NC
-                  NC | · · | IOREF                "led" PA5 | · · | PA12
-                PA13 | · · | RESET                      PA6 | · · | PA11
-                PA14 | · · | +3V3                       PA7 | · · | PB12
-                PA15 | · · | +5V                        PB6 | · · | NC
-                 GND | · · | GND                        PC7 | · · | GND
-                 PB7 | · · | GND                        PA9 | · · | PB2
-                PC13 | · · | VIN                        PA8 | · · | PB1
-                PC14 | · · | NC                        PB10 | · · | PB15
-                PC15 | · · | PA0                        PB4 | · · | PB14
-                 PH0 | · · | PA1                        PB5 | · · | PB13
-                 PH1 | · · | PA4                        PB3 | · · | AGND
-                VBAT | · · | PB0                       PA10 | · · | PC4
-                 PC2 | · · | PC1                        PA2 | · · | NC
-                 PC3 | · · | PC0                        PA3 | · · | NC
-                      ￣CN7                                  ￣CN10
-```
+![nucleo64-F446RE.pdf](data/nucleo64-F446RE.pdf)
 
 #### nucleo-144 **stm32-f767zi**
 
-```
-                                                   _CN7_
-                                              PC6 | · · | PB8
-                                             PB15 | · · | PB9
-                                             PB13 | · · | AVDD
-                  _CN8_                      PB12 | · · | GND
-              NC | · · | PC8                 PA15 | · · | PA5
-           IOREF | · · | PC9                  PC7 | · · | PA6
-           RESET | · · | PC10                 PB5 | · · | PA7
-           +3.3V | · · | PC11                 PB3 | · · | PD14
-             +5V | · · | PC12                 PA4 | · · | PD15
-             GND | · · | PD2                  PB4 | · · | PF12
-             GND | · · | PG2                       ￣￣￣
-             VIN | · · | PG3                                 
-                  ￣￣￣                            _CN10
-                                             AVDD | · · | PF13
-                  _CN9_                      AGND | · · | PE9
-             PA3 | · · | PD7                  GND | · · | PE11
-             PC0 | · · | PD6                  PB1 | · · | PF14
-             PC3 | · · | PD5                  PC2 | · · | PE13
-             PF3 | · · | PD4                  PF4 | · · | PF15
-             PF5 | · · | PD3                  PB6 | · · | PG14
-            PF10 | · · | GND                  PB2 | · · | PG9
-              NC | · · | PE2                  GND | · · | PE8
-             PA7 | · · | PE4                 PD13 | · · | PE7
-             PF2 | · · | PE5                 PD12 | · · | GND
-        (M1) PF1 | · · | PE6 (M6)            PD11 | · · | PE10
-        (M2) PF0 | · · | PE3 (M7)             PE2 | · · | PE12
-             GND | · · | PF8 (M8)             GND | · · | PE14
-        (M3) PD0 | · · | PF7 (M9)             PA0 | · · | PE15
-        (M4) PD1 | · · | PF9 (M10)            PB0 | · · | PB10
-        (M5) PG0 | · · | PG1                  PE0 | · · | PB11
-                  ￣￣￣                           ￣￣￣￣
-```
+![nucleo144-F767ZI.pdf](data/nucleo144-F767ZI.pdf)
 
 ## TODO
 
